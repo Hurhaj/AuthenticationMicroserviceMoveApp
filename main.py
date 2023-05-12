@@ -28,7 +28,7 @@ def index():
 
 @app.get("/hello")
 def hello():
-    return {"hello": "world"}
+    return {"hello": "world69"}
 
 
 @app.post("/authenticate")

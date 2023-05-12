@@ -23,7 +23,7 @@ app = FastAPI()
 
 @app.get("/")
 def index():
-    return {"data": "Application ran successfully - authentication microservice is working! Also, its deployed!"}
+    return {"data": "Application ran successfully - authentication microservice is working! Also, its deployed! again!!!!!!!!!!!!!!!!!!!"}
 
 
 @app.get("/hello")

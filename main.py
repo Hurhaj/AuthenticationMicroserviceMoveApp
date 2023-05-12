@@ -22,12 +22,12 @@ app = FastAPI()
 
 @app.get("/")
 def index():
-    return {"data": "Application ran successfully - authentication, should be working!"}
+    return {"data": "Application ran successfully - authentication, should be working! version : v0.0.1"}
 
 
 @app.get("/hello")
 def hello():
-    return {"hello": "world69"}
+    return {"hello": "world"}
 
 
 @app.post("/authenticate")

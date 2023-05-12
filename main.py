@@ -26,7 +26,12 @@ def index():
     return {"data": "Application ran successfully - authentication microservice is working! Also, its deployed!"}
 
 
-@app.post("authenticate")
+@app.post("/hello")
+def hello():
+    return {"hello": "world"}
+
+
+@app.post("/authenticate")
 def authenticate(token: str):
     try:
         idinfo = id_token.verify_oauth2_token(token, requests.Request(),

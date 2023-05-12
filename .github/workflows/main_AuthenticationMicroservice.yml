@@ -1,0 +1,51 @@
+# Docs for the Azure Web Apps Deploy action: https://github.com/Azure/webapps-deploy
+# More GitHub Actions for Azure: https://github.com/Azure/actions
+
+name: Build and deploy container app to Azure Web App - AuthenticationMicroservice
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: 'ubuntu-latest'
+
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Set up Docker Buildx
+      uses: docker/setup-buildx-action@v2
+
+    - name: Log in to registry
+      uses: docker/login-action@v2
+      with:
+        registry: https://authenticatecd.azurecr.io/
+        username: ${{ secrets.AzureAppService_ContainerUsername_975ca8e99ff14a9d9bbd160eee05b089 }}
+        password: ${{ secrets.AzureAppService_ContainerPassword_4448cf8ee1aa485f9178d2bc4ae8f57f }}
+
+    - name: Build and push container image to registry
+      uses: docker/build-push-action@v3
+      with:
+        push: true
+        tags: authenticatecd.azurecr.io/${{ secrets.AzureAppService_ContainerUsername_975ca8e99ff14a9d9bbd160eee05b089 }}/authenticate-cd:${{ github.sha }}
+        file: ./Dockerfile
+
+  deploy:
+    runs-on: ubuntu-latest
+    needs: build
+    environment:
+      name: 'production'
+      url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
+
+    steps:
+    - name: Deploy to Azure Web App
+      id: deploy-to-webapp
+      uses: azure/webapps-deploy@v2
+      with:
+        app-name: 'AuthenticationMicroservice'
+        slot-name: 'production'
+        publish-profile: ${{ secrets.AzureAppService_PublishProfile_e1d18bb06ec947029f04477ca56b86b6 }}
+        images: 'authenticatecd.azurecr.io/${{ secrets.AzureAppService_ContainerUsername_975ca8e99ff14a9d9bbd160eee05b089 }}/authenticate-cd:${{ github.sha }}'

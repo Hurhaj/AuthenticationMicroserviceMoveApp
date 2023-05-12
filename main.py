@@ -26,7 +26,7 @@ def index():
     return {"data": "Application ran successfully - authentication microservice is working! Also, its deployed!"}
 
 
-@app.post("/hello")
+@app.get("/hello")
 def hello():
     return {"hello": "world"}
 

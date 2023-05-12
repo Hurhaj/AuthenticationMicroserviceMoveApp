@@ -32,7 +32,7 @@ def hello():
 
 
 @app.post("/authenticate")
-def authenticate(token: str):
+async def authenticate(token: str):
     try:
         idinfo = id_token.verify_oauth2_token(token, requests.Request(),
                                               "168397874560-5uso2lk8p5pa43h3sb3eg9futfisese0.apps.googleusercontent.com")

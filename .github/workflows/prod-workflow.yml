@@ -64,6 +64,7 @@ jobs:
         with:
           app-name: 'AuthenticationMicroservice'
           images: 'authenticatecd.azurecr.io/authenticate-cd:${{ github.sha }}'
+          publish-profile: ${{ steps.publishProfileRetrieval.outputs.publishProfiles }}
 
       - name: Azure logout
         run: |

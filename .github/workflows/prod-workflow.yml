@@ -6,35 +6,35 @@ on:
       - main
 
 jobs:
-#  build:
-#    runs-on: ubuntu-latest
-#
-#    steps:
-#
-#      - name: Checkout GitHub Actions
-#        uses: actions/checkout@main
-#
-#      - name: Login via Azure CLI
-#        uses: azure/login@v1
-#        with:
-#          creds: ${{ secrets.AZURE_CREDENTIALS }}
-#
-#      - name: Login to Azure Container Registry
-#        uses: azure/docker-login@v1
-#        with:
-#          login-server: authenticatecd.azurecr.io
-#          username: ${{ secrets.REGISTRY_USERNAME }}
-#          password: ${{ secrets.REGISTRY_PASSWORD }}
-#
-#      - name: Build and push container image to registry
-#        run: |
-#          docker build . -t authenticatecd.azurecr.io/authenticate-cd:${{ github.sha }}
-#          docker push authenticatecd.azurecr.io/authenticate-cd:${{ github.sha }}
-#
-#      - name: Azure logout
-#        run: |
-#          az logout
-#
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+
+      - name: Checkout GitHub Actions
+        uses: actions/checkout@main
+
+      - name: Login via Azure CLI
+        uses: azure/login@v1
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
+
+      - name: Login to Azure Container Registry
+        uses: azure/docker-login@v1
+        with:
+          login-server: authenticatecd.azurecr.io
+          username: ${{ secrets.REGISTRY_USERNAME }}
+          password: ${{ secrets.REGISTRY_PASSWORD }}
+
+      - name: Build and push container image to registry
+        run: |
+          docker build . -t authenticatecd.azurecr.io/authenticate-cd:${{ github.sha }}
+          docker push authenticatecd.azurecr.io/authenticate-cd:${{ github.sha }}
+
+      - name: Azure logout
+        run: |
+          az logout
+
 
   deploy:
     runs-on: ubuntu-latest
